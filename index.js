@@ -18,12 +18,19 @@ window.onload = function () {
   const btns = document.getElementsByClassName("btn");
 
   for (let btn = 0; btn < btns.length; btn++) {
-    btns[btn].addEventListener("click", () => {
-      console.log(singleClickValues[btn]);
+    btns[btn].addEventListener("click", (e) => {
+      console.log(e.originalEvent)
+      // console.log(e,'[][]')
+      // console.log(singleClickValues[btn]);
+      console.log('click')
     });
 
-    btns[btn].addEventListener("dblclick", () => {
-      console.log(dblClickValues[btn]);
+    btns[btn].addEventListener("dblclick", (e) => {
+      console.log(e.originalEvent)
+      // console.log(e)
+      // console.log(dblClickValues[btn]);
+      console.log('dblclick')
+      return false;
     });
   }
 };
