@@ -1,7 +1,7 @@
 const singleClickValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, "*", 0, "#"];
 const dblClickValues = [
   [".", ",", "!"],
-  ["1", "b", "c"],
+  ["a", "b", "c"],
   ["d", "e", "f"],
   ["g", "h", "i"],
   ["j", "k", "l"],
@@ -14,23 +14,36 @@ const dblClickValues = [
   ["#"],
 ];
 
+function clickHandler(btn, btnIdx) {
+  let clickCount = 0;
+  let timeOut;
+  btn.addEventListener("click", (e) => {
+    if (timeOut) clearTimeout(timeOut);
+
+    clickCount++;
+
+    timeOut = setTimeout(() => {
+      if (clickCount == 1) {
+        console.log(singleClickValues[btnIdx]);
+      } else {
+        console.log({
+          clickCount,
+          len: dblClickValues[btnIdx].length,
+          mod: (clickCount - 1) % dblClickValues[btnIdx].length,
+        });
+        console.log(
+          dblClickValues[btnIdx][
+            ((clickCount - 1) % dblClickValues[btnIdx].length) - 1
+          ]
+        );
+        clickCount = 0;
+      }
+    }, 300);
+  });
+}
 window.onload = function () {
   const btns = document.getElementsByClassName("btn");
-
   for (let btn = 0; btn < btns.length; btn++) {
-    btns[btn].addEventListener("click", (e) => {
-      console.log(e.originalEvent)
-      // console.log(e,'[][]')
-      // console.log(singleClickValues[btn]);
-      console.log('click')
-    });
-
-    btns[btn].addEventListener("dblclick", (e) => {
-      console.log(e.originalEvent)
-      // console.log(e)
-      // console.log(dblClickValues[btn]);
-      console.log('dblclick')
-      return false;
-    });
+    clickHandler(btns[btn], btn);
   }
 };
